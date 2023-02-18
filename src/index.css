@@ -2,11 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-.btn{
-    @apply bg-blue-btn text-white font-medium rounded-md py-2 px-4 mt-2 font-sans;
-    font-family: 'Poppins', sans-serif;
+body {
+  font-family: "Poppins", sans-serif;
+  background: #D8D8D8;
+}
+.btn {
+  @apply bg-blue-btn text-white font-medium rounded-md py-2 px-4 mt-2 font-sans;
+  font-family: "Poppins", sans-serif;
 }
 
-.modal{
-    @apply bg-white
+.job-card{
+  width: 700px;
+  height: 320px;
 }
+
