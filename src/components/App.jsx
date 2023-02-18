@@ -1,9 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "./Modal";
 import JobCard from "./JobCard";
+import axios from "axios";
+import { URL } from "../utils/index";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
+  const [allJob, setAllJob] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${URL}/addJob`)
+      .then((response) => {
+        console.log(response.data);
+        setAllJob(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   function openModal(open) {
     if (open) {
@@ -24,53 +39,25 @@ function App() {
       </div>
       {isOpen && <Modal openModal={openModal} step={"Step 1"} />}
       <div className="flex flex-wrap m-2">
-        <div>
-          <JobCard />
-        </div>
-        <div>
-          <JobCard />
-        </div>
-        <div>
-          <JobCard />
-        </div>
-        <div>
-          <JobCard />
-        </div>
-        <div>
-          <JobCard />
-        </div>
-        <div>
-          <JobCard />
-        </div>
-        <div>
-          <JobCard />
-        </div>
-        <div>
-          <JobCard />
-        </div>
-        <div>
-          <JobCard />
-        </div>
-        <div>
-          <JobCard />
-        </div>
-        <div>
-          <JobCard />
-        </div>
-        <div>
-          <JobCard />
-        </div>
-        <div>
-          <JobCard />
-        </div>
-        <div>
-          <JobCard />
-        </div>
-        <div>
-          <JobCard />
-        </div>
-        <div>
-          <JobCard />
+        <div className="flex flex-wrap">
+          {allJob.map((job) => {
+            return (
+              <div>
+                <JobCard
+                  key={job.id}
+                  jobTitle={job.jobTitle}
+                  companyName={job.companyName}
+                  industry={job.industry}
+                  location={job.location}
+                  remoteType={job.remoteType}
+                  experience={job.experience}
+                  salary={job.salary}
+                  totalEmployee={job.totalEmployee}
+                  applyType={job.applyType}
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

@@ -9,7 +9,8 @@ module.exports = {
         'blue-btn': '#1597E4',
         'black-font': '#182021',
         'borderColor':'#E6E6E6',
-        'greyFont': '#7A7A7A'
+        'greyFont': '#7A7A7A',
+        'cardLocation': '#646464'
       }
     },
   },

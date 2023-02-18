@@ -1,6 +1,6 @@
 import React from "react";
 
-const InputGroup = ({ required, label, placeholder }) => {
+const InputGroup = ({ required, label, placeholder, inputType }) => {
   return (
     <div>
       <div className="mb-6">
@@ -12,7 +12,7 @@ const InputGroup = ({ required, label, placeholder }) => {
           {required && <span className="text-red-600">*</span>}
         </label>
         <input
-          type="text"
+          type={inputType}
           id="job-title"
           name="job-title"
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"

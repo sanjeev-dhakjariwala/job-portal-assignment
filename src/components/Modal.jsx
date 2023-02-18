@@ -6,15 +6,18 @@ import InputRadio from "./InputRadio";
 const Modal = ({ openModal, step }) => {
   const [modalOpen, setModalOpen] = useState(true);
   const [stepModal, setStepModal] = useState(step);
+
   const onClickModal = () => {
     if (modalOpen) {
       setModalOpen(false);
       openModal(false);
     }
   };
+
   const onButtonClick = () => {
     setStepModal("Step 2");
   };
+  
   return (
     <>
       {modalOpen && (
@@ -56,6 +59,7 @@ const Modal = ({ openModal, step }) => {
                       required={true}
                       label={"Job Title"}
                       placeholder={"ex. UX UI Designer"}
+                      inputType={"text"}
                     />
                     <InputGroup
                       required={true}
@@ -97,7 +101,11 @@ const Modal = ({ openModal, step }) => {
                       placeholder1={"Minimum"}
                       placeholder2={"Maximum"}
                     />
-                    <InputGroup required={false} label={"Total Employee"} placeholder={"ex. 100"}/>
+                    <InputGroup
+                      required={false}
+                      label={"Total Employee"}
+                      placeholder={"ex. 100"}
+                    />
                     <InputRadio />
                   </div>
                 )}
