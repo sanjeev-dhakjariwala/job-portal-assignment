@@ -4,15 +4,38 @@
 
 body {
   font-family: "Poppins", sans-serif;
-  background: #D8D8D8;
+  background: #d8d8d8;
 }
 .btn {
   @apply bg-blue-btn text-white font-medium rounded-md py-2 px-4 mt-2 font-sans;
   font-family: "Poppins", sans-serif;
 }
 
-.job-card{
+.job-card {
   width: 700px;
   height: 380px;
 }
 
+.error {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate(-1px, 0);
+  }
+  20%,
+  80% {
+    transform: translate(2px, 0);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translate(-4px, 0);
+  }
+  40%,
+  60% {
+    transform: translate(4px, 0);
+  }
+}

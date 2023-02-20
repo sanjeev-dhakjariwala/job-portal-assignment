@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 const InputGroup = ({
   required,
@@ -8,6 +8,7 @@ const InputGroup = ({
   value,
   name,
   onChange,
+  useRef,
 }) => {
   return (
     <div>
@@ -23,12 +24,17 @@ const InputGroup = ({
           type={inputType}
           id={name}
           name={name}
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className={
+            "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          }
           placeholder={placeholder}
           value={value}
           onChange={onChange}
+          ref={useRef}
         ></input>
-        {required && <span className="text-red-500 text-base">{`Enter ${name}`}</span>}
+        {required && (
+          <span className="text-red-500 text-base">{`Enter ${label}`}</span>
+        )}
       </div>
     </div>
   );

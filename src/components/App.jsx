@@ -40,10 +40,11 @@ function App() {
       {isOpen && <Modal openModal={openModal} step={"Step 1"} />}
       <div className="flex flex-wrap m-2">
         <div className="flex flex-wrap">
-          {allJob.map((job) => {
+          {allJob?.map((job) => {
             return (
               <div key={job.id}>
                 <JobCard
+                  id={job.id}
                   jobTitle={job.jobTitle}
                   companyName={job.companyName}
                   industry={job.industry}

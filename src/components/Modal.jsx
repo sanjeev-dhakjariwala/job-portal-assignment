@@ -2,12 +2,19 @@ import React, { useState } from "react";
 import InputGroup from "./InputGroup";
 import InputTwo from "./InputTwo";
 import InputRadio from "./InputRadio";
+import axios from "axios";
+import { URL } from "../utils/index";
 
 const Modal = ({ openModal, step }) => {
   const [modalOpen, setModalOpen] = useState(true);
   const [stepModal, setStepModal] = useState(step);
   const [stepOneData, setStepOneData] = useState({});
-  const [jobObj, setJobObj] = useState({});
+  const [stepTwoData, setStepTwoData] = useState({});
+  const [selectedOption, setSelectedOption] = useState("option1");
+
+  function handleOptionChange(value) {
+    setSelectedOption(value);
+  }
 
   const onClickModal = () => {
     if (modalOpen) {
@@ -16,17 +23,75 @@ const Modal = ({ openModal, step }) => {
     }
   };
 
-  const onButtonClick = () => {
-    
-    setStepModal("Step 2");
+  const onButtonClick = (event) => {
+    event.preventDefault();
+    if (stepModal === "Step 1") {
+      console.log(`BUTTON NEXT PRESSED! ${JSON.stringify(stepOneData)}`);
+      if (
+        !stepOneData?.jobTitle ||
+        !stepOneData?.companyName ||
+        !stepOneData?.industry
+      ) {
+        console.log("ALERT!!");
+        alert("Please fill in all * fields");
+      } else {
+        setStepModal("Step 2");
+      }
+    }
+    if (stepModal === "Step 2") {
+      const finalObj = { ...stepOneData, ...stepTwoData };
+      finalObj.applyType = selectedOption;
+
+      console.log(`FINAL OBJ ${finalObj}`);
+
+      if (!finalObj?.location) {
+        finalObj.location = "";
+      }
+      if (!finalObj?.remoteType) {
+        finalObj.jobTitle = "";
+      }
+      if (!finalObj?.experience) {
+        finalObj.experience = {
+          minimum: "",
+          maximum: "",
+        };
+      }
+      if (!finalObj?.salary) {
+        finalObj.salary = {
+          minimum: "",
+          maximum: "",
+        };
+      }
+      if (!finalObj?.totalEmployee) {
+        finalObj.totalEmployee = "";
+      }
+      if (!finalObj?.applyType) {
+        finalObj.applyType = "";
+      }
+      axios
+        .post(`${URL}/addJob`, finalObj)
+        .then((response) => {
+          console.log("User created:", response.data);
+          setModalOpen(false);
+          openModal(false);
+        })
+        .catch((error) => {
+          console.error("Error creating user:", error);
+        });
+    }
   };
 
   const stepOneHandleChange = (event) => {
     const { name, value } = event.target;
     setStepOneData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
+  const stepTwoHandleChange = (event) => {
+    const { name, value } = event.target;
+    setStepTwoData((prevFormData) => ({ ...prevFormData, [name]: value }));
+  };
 
   console.log(stepOneData);
+  console.log(stepTwoData);
   return (
     <>
       {modalOpen && (
@@ -62,6 +127,7 @@ const Modal = ({ openModal, step }) => {
                     {stepModal}
                   </span>
                 </div>
+
                 {stepModal.includes("1") && (
                   <div>
                     <InputGroup
@@ -82,7 +148,7 @@ const Modal = ({ openModal, step }) => {
                       required={
                         true &&
                         (stepOneData.companyName === undefined ||
-                          stepOneData.companyName === '')
+                          stepOneData.companyName === "")
                           ? true
                           : false
                       }
@@ -136,29 +202,44 @@ const Modal = ({ openModal, step }) => {
                       label={"Experience"}
                       placeholder1={"Minimum"}
                       placeholder2={"Maximum"}
+                      name1={"Minimum"}
+                      name2={"Maximum"}
+                      inputType1={"text"}
+                      inputType2={"text"}
+                      onChange={stepTwoHandleChange}
                     />
                     <InputTwo
                       label={"Salary"}
                       placeholder1={"Minimum"}
                       placeholder2={"Maximum"}
+                      name1={"Minimum"}
+                      name2={"Maximum"}
+                      inputType1={"text"}
+                      inputType2={"text"}
+                      onChange={stepTwoHandleChange}
                     />
                     <InputGroup
                       required={false}
                       label={"Total Employee"}
                       placeholder={"ex. 100"}
+                      name={"totalEmployee"}
+                      onChange={stepTwoHandleChange}
                     />
-                    <InputRadio />
+                    <InputRadio
+                      selectedOption={selectedOption}
+                      onOptionChange={handleOptionChange}
+                    />
                   </div>
                 )}
-              </div>
-
-              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                <button
-                  className="w-68 inline-flex justify-center rounded-md shadow-sm px-4 py-2 bg-blue-btn text-base text-lg font-medium text-white sm:ml-3 sm:w-auto sm:text-sm"
-                  onClick={onButtonClick}
-                >
-                  {stepModal === "Step 1" ? "Next" : "Save"}
-                </button>
+                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                  <button
+                    className="w-68 inline-flex justify-center rounded-md shadow-sm px-4 py-2 bg-blue-btn text-base text-lg font-medium text-white sm:ml-3 sm:w-auto sm:text-sm"
+                    type="submit"
+                    onClick={onButtonClick}
+                  >
+                    {stepModal === "Step 1" ? "Next" : "Save"}
+                  </button>
+                </div>
               </div>
             </div>
           </div>

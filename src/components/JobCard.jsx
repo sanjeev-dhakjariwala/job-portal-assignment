@@ -1,14 +1,36 @@
 import React from "react";
 import companyImageImg from "../img/netflix.svg";
+import { URL } from "../utils/index";
+import axios from "axios";
 
-const JobCard = ({jobTitle,companyName,industry,location,remoteType,experience,salary,totalEmployee,applyType}) => {
+const JobCard = ({
+  id,
+  jobTitle,
+  companyName,
+  industry,
+  location,
+  remoteType,
+  experience,
+  salary,
+  totalEmployee,
+  applyType,
+}) => {
+  const handleSpanClick = () => {
+    axios.delete(`${URL}/addJob/${id}`)
+  .then(response => {
+    console.log('User deleted:', response.data);
+  })
+  .catch(error => {
+    console.error('Error deleting user:', error);
+  });
+  };
   return (
     <div className="flex flex-wrap justify-center">
       <div className="job-card bg-white shadow-md rounded-lg p-6 m-3 relative">
         <div className="flex items-center">
           <img
             src={companyImageImg}
-            className="w-12 h-12 mr-4 self-start"
+            className="w-12 h-12 mr-20 ml-20 mt-7 mself-start"
             alt="CompanyImage"
           ></img>
           <div className="flex flex-col">
@@ -59,7 +81,12 @@ const JobCard = ({jobTitle,companyName,industry,location,remoteType,experience,s
             </div>
           </div>
         </div>
-        <span className="absolute top-0 right-0 p-2 text-gray-500 hover:text-red-500 cursor-pointer">Delete</span>
+        <span
+          className="absolute top-0 right-0 p-2 text-gray-500 hover:text-red-500 cursor-pointer"
+          onClick={handleSpanClick}
+        >
+          Delete
+        </span>
       </div>
     </div>
   );
