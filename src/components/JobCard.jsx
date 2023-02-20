@@ -59,7 +59,7 @@ const JobCard = ({jobTitle,companyName,industry,location,remoteType,experience,s
             </div>
           </div>
         </div>
-        <span class="absolute top-0 right-0 p-2 text-gray-500 hover:text-red-500 cursor-pointer">Delete</span>
+        <span className="absolute top-0 right-0 p-2 text-gray-500 hover:text-red-500 cursor-pointer">Delete</span>
       </div>
     </div>
   );

@@ -42,9 +42,8 @@ function App() {
         <div className="flex flex-wrap">
           {allJob.map((job) => {
             return (
-              <div>
+              <div key={job.id}>
                 <JobCard
-                  key={job.id}
                   jobTitle={job.jobTitle}
                   companyName={job.companyName}
                   industry={job.industry}

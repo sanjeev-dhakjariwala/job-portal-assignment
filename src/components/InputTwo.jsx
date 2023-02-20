@@ -6,13 +6,13 @@ const InputTwo = ({ required, label, placeholder1, placeholder2 }) => {
       <div className="mb-6">
         <label
           for="job-title"
-          class="flex item-center block text-black-font font-bold text-sm mb-1"
+          className="flex item-center block text-black-font font-bold text-sm mb-1"
         >
           <span>{label}</span>
           {required && <span className="text-red-600">*</span>}
         </label>
-        <div class="flex">
-          <div class="w-1/2 mr-6">
+        <div className="flex">
+          <div className="w-1/2 mr-6">
             <input
               type="text"
               id="job-title"
@@ -21,7 +21,7 @@ const InputTwo = ({ required, label, placeholder1, placeholder2 }) => {
               placeholder={placeholder1}
             ></input>
           </div>
-          <div class="w-1/2">
+          <div className="w-1/2">
             <input
               type="text"
               id="job-title"

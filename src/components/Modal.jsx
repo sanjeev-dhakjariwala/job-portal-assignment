@@ -6,6 +6,8 @@ import InputRadio from "./InputRadio";
 const Modal = ({ openModal, step }) => {
   const [modalOpen, setModalOpen] = useState(true);
   const [stepModal, setStepModal] = useState(step);
+  const [stepOneData, setStepOneData] = useState({});
+  const [jobObj, setJobObj] = useState({});
 
   const onClickModal = () => {
     if (modalOpen) {
@@ -15,9 +17,16 @@ const Modal = ({ openModal, step }) => {
   };
 
   const onButtonClick = () => {
+    
     setStepModal("Step 2");
   };
-  
+
+  const stepOneHandleChange = (event) => {
+    const { name, value } = event.target;
+    setStepOneData((prevFormData) => ({ ...prevFormData, [name]: value }));
+  };
+
+  console.log(stepOneData);
   return (
     <>
       {modalOpen && (
@@ -36,9 +45,9 @@ const Modal = ({ openModal, step }) => {
               aria-modal="true"
               aria-labelledby="modal-headline"
             >
-              <div class="flex flex-row-reverse">
+              <div className="flex flex-row-reverse">
                 <span
-                  class="text-sm hover:text-red-500 cursor-pointer"
+                  className="text-sm hover:text-red-500 cursor-pointer"
                   onClick={onClickModal}
                 >
                   Close
@@ -56,20 +65,46 @@ const Modal = ({ openModal, step }) => {
                 {stepModal.includes("1") && (
                   <div>
                     <InputGroup
-                      required={true}
+                      required={
+                        true &&
+                        (stepOneData.jobTitle === undefined ||
+                          stepOneData.jobTitle === "")
+                          ? true
+                          : false
+                      }
                       label={"Job Title"}
                       placeholder={"ex. UX UI Designer"}
                       inputType={"text"}
-                    />
+                      name={"jobTitle"}
+                      onChange={stepOneHandleChange}
+                    ></InputGroup>
                     <InputGroup
-                      required={true}
+                      required={
+                        true &&
+                        (stepOneData.companyName === undefined ||
+                          stepOneData.companyName === '')
+                          ? true
+                          : false
+                      }
                       label={"Company Name"}
                       placeholder={"ex. Google"}
+                      inputType={"text"}
+                      name={"companyName"}
+                      onChange={stepOneHandleChange}
                     />
                     <InputGroup
-                      required={true}
+                      required={
+                        true &&
+                        (stepOneData.industry === undefined ||
+                          stepOneData.industry === "")
+                          ? true
+                          : false
+                      }
                       label={"Industry"}
                       placeholder={"ex. Information Technology"}
+                      inputType={"text"}
+                      name={"industry"}
+                      onChange={stepOneHandleChange}
                     />
                     <div className="flex">
                       <div className="w-1/2 mr-6">
@@ -77,6 +112,9 @@ const Modal = ({ openModal, step }) => {
                           required={false}
                           label={"Location"}
                           placeholder={"ex. Chennai"}
+                          inputType={"text"}
+                          name={"location"}
+                          onChange={stepOneHandleChange}
                         />
                       </div>
                       <div className="w-1/2">
@@ -84,6 +122,9 @@ const Modal = ({ openModal, step }) => {
                           required={false}
                           label={"Remote Type"}
                           placeholder={"ex. In-office"}
+                          inputType={"text"}
+                          name={"remoteType"}
+                          onChange={stepOneHandleChange}
                         />
                       </div>
                     </div>
