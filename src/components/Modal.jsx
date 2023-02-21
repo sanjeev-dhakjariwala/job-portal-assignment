@@ -39,7 +39,16 @@ const Modal = ({ openModal, step, updateJob }) => {
       }
     }
     if (stepModal === "Step 2") {
-      const finalObj = { ...stepOneData, ...stepTwoData };
+      const finalObj = { ...stepOneData };
+      finalObj.experience = {
+        minimum: stepTwoData.minimumExperience,
+        maximum: stepTwoData.maximumExperience,
+      };
+      finalObj.salary = {
+        minimum: stepTwoData.minimumSalary,
+        maximum: stepTwoData.maximumSalary,
+      };
+      finalObj.totalEmployee = stepTwoData.totalEmployee;
       finalObj.applyType = selectedOption;
 
       console.log(`FINAL OBJ ${JSON.stringify(finalObj)}`);
@@ -215,7 +224,7 @@ const Modal = ({ openModal, step, updateJob }) => {
                       placeholder1={"Minimum"}
                       placeholder2={"Maximum"}
                       name1={"minimumSalary"}
-                      name2={"MaximumSalary"}
+                      name2={"maximumSalary"}
                       inputType1={"text"}
                       inputType2={"text"}
                       onChange={stepTwoHandleChange}
