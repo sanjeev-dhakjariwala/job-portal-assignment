@@ -18,7 +18,17 @@ function App() {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  },[]);
+
+  const updateJobArr = (data) => {
+    setAllJob([...allJob,data]);
+  };
+  const deleteJobArr = (data) => {
+    const filterJob = allJob.filter((job)=>{
+      return JSON.stringify(data) !== JSON.stringify(job);
+    })
+    setAllJob([...filterJob]);
+  };
 
   function openModal(open) {
     if (open) {
@@ -37,7 +47,9 @@ function App() {
           Create Job
         </button>
       </div>
-      {isOpen && <Modal openModal={openModal} step={"Step 1"} />}
+      {isOpen && (
+        <Modal openModal={openModal} step={"Step 1"} updateJob={updateJobArr} />
+      )}
       <div className="flex flex-wrap m-2">
         <div className="flex flex-wrap">
           {allJob?.map((job) => {
@@ -54,6 +66,7 @@ function App() {
                   salary={job.salary}
                   totalEmployee={job.totalEmployee}
                   applyType={job.applyType}
+                  deleteJobArr={deleteJobArr}
                 />
               </div>
             );

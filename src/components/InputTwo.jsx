@@ -1,6 +1,16 @@
 import React from "react";
 
-const InputTwo = ({ required, label, placeholder1, placeholder2, name1, name2, inputType1, inputType2, onChange }) => {
+const InputTwo = ({
+  required,
+  label,
+  placeholder1,
+  placeholder2,
+  name1,
+  name2,
+  inputType1,
+  inputType2,
+  onChange,
+}) => {
   return (
     <div>
       <div className="mb-6">

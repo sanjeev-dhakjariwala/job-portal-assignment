@@ -5,7 +5,7 @@ import InputRadio from "./InputRadio";
 import axios from "axios";
 import { URL } from "../utils/index";
 
-const Modal = ({ openModal, step }) => {
+const Modal = ({ openModal, step, updateJob }) => {
   const [modalOpen, setModalOpen] = useState(true);
   const [stepModal, setStepModal] = useState(step);
   const [stepOneData, setStepOneData] = useState({});
@@ -42,7 +42,7 @@ const Modal = ({ openModal, step }) => {
       const finalObj = { ...stepOneData, ...stepTwoData };
       finalObj.applyType = selectedOption;
 
-      console.log(`FINAL OBJ ${finalObj}`);
+      console.log(`FINAL OBJ ${JSON.stringify(finalObj)}`);
 
       if (!finalObj?.location) {
         finalObj.location = "";
@@ -72,6 +72,8 @@ const Modal = ({ openModal, step }) => {
         .post(`${URL}/addJob`, finalObj)
         .then((response) => {
           console.log("User created:", response.data);
+          alert("Job Added Successfully");
+          updateJob(response.data);
           setModalOpen(false);
           openModal(false);
         })
@@ -202,8 +204,8 @@ const Modal = ({ openModal, step }) => {
                       label={"Experience"}
                       placeholder1={"Minimum"}
                       placeholder2={"Maximum"}
-                      name1={"Minimum"}
-                      name2={"Maximum"}
+                      name1={"minimumExperience"}
+                      name2={"maximumExperience"}
                       inputType1={"text"}
                       inputType2={"text"}
                       onChange={stepTwoHandleChange}
@@ -212,8 +214,8 @@ const Modal = ({ openModal, step }) => {
                       label={"Salary"}
                       placeholder1={"Minimum"}
                       placeholder2={"Maximum"}
-                      name1={"Minimum"}
-                      name2={"Maximum"}
+                      name1={"minimumSalary"}
+                      name2={"MaximumSalary"}
                       inputType1={"text"}
                       inputType2={"text"}
                       onChange={stepTwoHandleChange}

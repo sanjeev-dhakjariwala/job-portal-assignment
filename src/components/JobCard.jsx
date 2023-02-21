@@ -2,6 +2,7 @@ import React from "react";
 import companyImageImg from "../img/netflix.svg";
 import { URL } from "../utils/index";
 import axios from "axios";
+import Modal from "react-modal";
 
 const JobCard = ({
   id,
@@ -14,15 +15,19 @@ const JobCard = ({
   salary,
   totalEmployee,
   applyType,
+  deleteJobArr,
 }) => {
   const handleSpanClick = () => {
-    axios.delete(`${URL}/addJob/${id}`)
-  .then(response => {
-    console.log('User deleted:', response.data);
-  })
-  .catch(error => {
-    console.error('Error deleting user:', error);
-  });
+    alert('It will Delete The Job Card');
+    axios
+      .delete(`${URL}/addJob/${id}`)
+      .then((response) => {
+        deleteJobArr(response.data);
+        console.log("User deleted:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error deleting user:", error);
+      });
   };
   return (
     <div className="flex flex-wrap justify-center">
@@ -30,10 +35,10 @@ const JobCard = ({
         <div className="flex items-center">
           <img
             src={companyImageImg}
-            className="w-12 h-12 mr-20 ml-20 mt-7 mself-start"
+            className="w-12 h-12 self-start"
             alt="CompanyImage"
           ></img>
-          <div className="flex flex-col">
+          <div className="flex flex-col ml-3">
             <span className="text-2xl text-black-font font-normal">
               {jobTitle}
             </span>
@@ -69,24 +74,32 @@ const JobCard = ({
             </div>
             <div className="flex flex-row">
               <button
-                className={`w-32 h-10 bg-blue-btn text-base text-white font-medium py-2 px-4 rounded mr-6`}
+                className={`w-32 h-10 ${
+                  applyType === "option1"
+                    ? "bg-blue-btn text-white"
+                    : "text-blue-btn border border-blue-btn border-1 text-blue-btn"
+                } text-base font-medium py-2 px-4 rounded mr-6`}
               >
                 Apply Now
               </button>
               <button
-                className={`border border-blue-btn border-1 w-40 h-10 bg-white-500 text-base text-blue-btn font-medium py-2 px-4 rounded`}
+                className={`${
+                  applyType === "option2"
+                    ? "bg-blue-btn text-white"
+                    : "text-blue-btn border border-blue-btn border-1 bg-white-500"
+                } w-40 h-10  text-base font-medium py-2 px-4 rounded`}
               >
                 External Apply
               </button>
             </div>
           </div>
+          <span
+            className="absolute top-0 right-0 p-2 text-gray-500 hover:text-red-500 cursor-pointer"
+            onClick={handleSpanClick}
+          >
+            Delete
+          </span>
         </div>
-        <span
-          className="absolute top-0 right-0 p-2 text-gray-500 hover:text-red-500 cursor-pointer"
-          onClick={handleSpanClick}
-        >
-          Delete
-        </span>
       </div>
     </div>
   );
